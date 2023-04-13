@@ -11,7 +11,7 @@ from pathlib import Path
 
 from dataclasses import dataclass
 
-GH_REPO_PATH = "wacedungeoner/wace"
+GH_REPO_PATH = "wace-vault/collection"
 INCLUDED_PATH = "resources"
 BASE_URL = "//"
 
@@ -53,7 +53,7 @@ def create_tree(tree):
         directory = path[:-1]
         filename = path[-1]
 
-        file_url = f"https://github.com/wacedungeoner/wace/raw/main/{urllib.parse.quote(obj['path'])}"
+        file_url = f"https://github.com/{GH_REPO_PATH}/raw/main/{urllib.parse.quote(obj['path'])}"
 
         current_tree = new_tree
 
