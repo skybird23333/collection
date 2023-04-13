@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+
+<head>
+  <title>Index of {{root_prefix}}{{path}}</title>
+  <script src="https://code.iconify.design/1/1.0.6/iconify.min.js"></script>
+</head>
+
+<body>
+  <h1>Index of {{root_prefix}}{{path}}</h1>
+  <table>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th>Size</th>
+    </tr>
+    <tr>
+      <th colspan="5">
+        <hr />
+      </th>
+    </tr>
+    {% if not is_root %}
+    <tr>
+      <td valign="top">
+        <span class="iconify" data-icon="mdi-arrow-left-bold-box-outline" height="30"></span>
+      </td>
+      <td>
+        <a href="../">Parent Directory</a>
+      </td>
+      <td>&nbsp;</td>
+    </tr>
+    {% endif %}
+    {% for item in contents %} {% if item['type'] ==
+    'folder' %}
+    <tr>
+      <td valign="top">
+        <span class="iconify" data-icon="mdi-{{item['icon']}}" height="30"></span>
+      </td>
+      <td>
+        <a href="{{item['name'].split('/')[-1:][0]}}/">{{item['name'].split('/')[-1:][0]}}/</a>
+      </td>
+      <td align="right">{{item['size']}}</td>
+    </tr>
+
+    {% else %}
+    <tr>
+      <td valign="top">
+        <span class="iconify" data-icon="mdi-{{item['icon']}}" height="30"></span>
+      </td>
+      <td>
+        <a href="{{item['url']}}">{{item['name'].split('/')[-1:][0]}}</a>
+      </td>
+      <td align="right">{{item['size']}}</td>
+    </tr>
+    {% endif %} {% endfor %}
+    <tr>
+      <th colspan="5">
+        <hr />
+      </th>
+    </tr>
+  </table>
+</body>
+
+</html>
