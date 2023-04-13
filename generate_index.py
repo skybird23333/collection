@@ -53,7 +53,7 @@ def create_tree(tree):
         directory = path[:-1]
         filename = path[-1]
 
-        file_url = f"https://github.com/denosawr/wace/raw/main/{urllib.parse.quote(obj['path'])}"
+        file_url = f"https://github.com/wacedungeoner/wace/raw/main/{urllib.parse.quote(obj['path'])}"
 
         current_tree = new_tree
 
