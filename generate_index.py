@@ -4,9 +4,6 @@ import json
 import os
 import sys
 
-import jinja2
-from jinja2 import Environment
-
 from pathlib import Path
 
 from dataclasses import dataclass
@@ -15,6 +12,7 @@ GH_REPO_PATH = "wace-vault/collection"
 INCLUDED_PATH = "resources"
 BASE_URL = "//"
 
+OUTPUT = {}
 
 suffixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 
@@ -37,7 +35,7 @@ class File:
 
 def fetch_tree_flat(url):
     API_ENDPOINT = f"https://api.github.com/repos/{GH_REPO_PATH}/git/trees/main?recursive=1"
-    return requests.get(API_ENDPOINT).json()
+    return requests.get(API_ENDPOINT, verify=False).json() #TODO: Disable verify false
 
 
 def create_tree(tree):
@@ -60,16 +58,17 @@ def create_tree(tree):
         for folder in directory:
             current_tree = current_tree.setdefault(folder, dict())
 
-        current_tree[filename] = File(
-            name=filename, size=obj["size"], url=file_url
-        )
+        current_tree[filename] = {
+            "name": filename,
+            "size": obj["size"],
+            "url": file_url
+        }
 
     return new_tree
 
 
 def generate_index_recursively(base_path, output_path, is_root, tree):
     folder_path = base_path / output_path
-    os.makedirs(folder_path, exist_ok=True)
 
     contents = []
 
@@ -95,27 +94,13 @@ def generate_index_recursively(base_path, output_path, is_root, tree):
     contents.sort(key=lambda x: (
         "A" if x["type"] == "folder" else "B") + x["name"])
 
-    with open(folder_path / "index.html", "w") as f:
-        f.write(
-            Environment()
-            .from_string(TEMPLATE)
-            .render(
-                path=str(output_path),
-                root_prefix="/",
-                is_root=is_root,
-                contents=contents,
-            )
-        )
-
 
 if __name__ == "__main__":
-    with open("template.html") as f:
-        TEMPLATE = f.read()
-
     flat_tree = fetch_tree_flat(GH_REPO_PATH)
     tree = create_tree(flat_tree["tree"])
 
-    base_path = Path("./output")
+    with open('public/index.json', 'w') as file:
+        file.write(json.dumps(tree))
 
-    generate_index_recursively(base_path, Path(
-        "."), True, tree[INCLUDED_PATH])
+    # generate_index_recursively(Path("."), Path(
+    #     "."), True, tree[INCLUDED_PATH])
