@@ -15,8 +15,8 @@ console.log(data)
 </script>
 
 <template>
-    <BasePopout>
-        <NThing>
+    <BasePopout style="width: 100%;">
+        <NThing style=" padding: 20px;">
             <template #avatar>
                 <NAvatar>
                     <NIcon>
