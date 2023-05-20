@@ -57,7 +57,7 @@ const indexDataToMenuOptions = (data: any): FileMenuOption[] => {
       }
     } else {
       return {
-        label: entry[0],
+        label: `${entry[0]}[${Object.keys(entry[1]).length}]`,
         key: entry[0],
         icon: renderIcon(FolderOutline),
         type: 'folder',
@@ -129,19 +129,23 @@ fetchIndexData()
       </NLayoutHeader>
 
 
-      <NLayout has-sider>
+      <NScrollbar :x-scrollable="true">
 
-        <div v-for="[index, popout] in state.popOuts.entries()" :key="index">
-          <MenuPopout v-if="popout.type == 'folder'" :options="popout.data" :index="index" @selected="onmenuSelected"
+        <NLayout has-sider>
+          
+          <div v-for="[index, popout] in state.popOuts.entries()" :key="index">
+            <MenuPopout v-if="popout.type == 'folder'" :options="popout.data" :index="index" @selected="onmenuSelected"
             :collapsed="(state.popOuts.length - index > 2)" />
-          <FilePopout v-if="popout.type == 'document'" :data="popout.data" :index="index" />
-        </div>
-
-        <NLayout>
-
+            <FilePopout v-if="popout.type == 'document'" :data="popout.data" :index="index" />
+          </div>
+          
+          <NLayout>
+            
+          </NLayout>
+          
         </NLayout>
 
-      </NLayout>
+      </NScrollbar>
     </NSpace>
   </NConfigProvider>
 </template>
