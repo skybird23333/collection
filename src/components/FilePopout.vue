@@ -10,8 +10,6 @@ const { data } = defineProps(['data'])
 
 const size = humaniseSize(data.size)
 
-console.log(data)
-
 </script>
 
 <template>

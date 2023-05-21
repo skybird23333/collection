@@ -13,6 +13,7 @@ interface FolderPopoutData {
   name: string
   type: 'folder',
   data: MenuOption[]
+  folderData: any
 }
 
 interface DocumentPopoutData {
@@ -75,6 +76,7 @@ const fetchIndexData = async () => {
   state.popOuts.push({
     type: 'folder',
     data: indexDataToMenuOptions(data.resources),
+    folderData: data.resources,
     name: 'collection'
   })
 }
@@ -93,6 +95,7 @@ const onmenuSelected = (option: string, index: number) => {
     state.popOuts.push({
       type: 'folder',
       data: indexDataToMenuOptions(optionData.data),
+      folderData: optionData.data,
       name: optionData.label
     })
   } else if (optionData.type == 'document') {
@@ -134,8 +137,8 @@ fetchIndexData()
         <NLayout has-sider>
           
           <div v-for="[index, popout] in state.popOuts.entries()" :key="index">
-            <MenuPopout v-if="popout.type == 'folder'" :options="popout.data" :index="index" @selected="onmenuSelected"
-            :collapsed="(state.popOuts.length - index > 2)" />
+            <MenuPopout v-if="popout.type == 'folder'" :options="popout.data" :index="index" :name="popout.name" @selected="onmenuSelected"
+            :collapsed="(state.popOuts.length - index > 2)" :folderData="popout.folderData"/>
             <FilePopout v-if="popout.type == 'document'" :data="popout.data" :index="index" />
           </div>
           
