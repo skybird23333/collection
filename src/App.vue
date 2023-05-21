@@ -74,7 +74,7 @@ const indexDataToMenuOptions = (data: any): FileMenuOption[] => {
 // Fetch the index data file, and then push the initial
 // popout containing the root folder
 const fetchIndexData = async () => {
-  const res = await fetch('/index.json')
+  const res = await fetch('/collection/index.json')
   const data = await res.json()
   //@ts-ignore
   state.popOuts.push({
