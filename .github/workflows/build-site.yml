@@ -34,7 +34,15 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
-        
+      
+      - name: Install pip requirements
+        run: pip3 install -r requirements.txt
+        shell: sh
+      
+      - name: Run generation script
+        run: python generate_index.py
+        shell: sh
+      
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
@@ -44,15 +52,7 @@ jobs:
       - run: npm i
 
       - run: npm run build
-
-      - name: Install pip requirements
-        run: pip3 install -r requirements.txt
-        shell: sh
       
-      - name: Run generation script
-        run: python generate_index.py
-        shell: sh
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
