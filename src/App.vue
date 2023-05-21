@@ -4,7 +4,8 @@ import { NConfigProvider, NMenu, NIcon, NSpace, NLayout, NLayoutSider, NScrollba
 import type { MenuOption } from 'naive-ui'
 import { darkTheme } from 'naive-ui';
 import { DocumentOutline, FolderOutline } from "@vicons/ionicons5"
-import { h, VNode } from 'vue'
+import { h } from 'vue'
+import type { VNode, Component } from 'vue'
 import MenuPopout from './components/MenuPopout.vue';
 import FilePopout from './components/FilePopout.vue';
 import type { VaultDocument } from './types/interfaces'
@@ -48,6 +49,7 @@ function renderIcon(icon: Component) {
 // Convert the file index tree into menu options format
 const indexDataToMenuOptions = (data: any): FileMenuOption[] => {
   return Object.entries(data).map(entry => {
+    //@ts-ignore
     if (entry[1].name && entry[1].size) { //item is a file
       return {
         label: entry[0],
@@ -58,6 +60,7 @@ const indexDataToMenuOptions = (data: any): FileMenuOption[] => {
       }
     } else {
       return {
+        //@ts-ignore
         label: `${entry[0]}[${Object.keys(entry[1]).length}]`,
         key: entry[0],
         icon: renderIcon(FolderOutline),
@@ -73,6 +76,7 @@ const indexDataToMenuOptions = (data: any): FileMenuOption[] => {
 const fetchIndexData = async () => {
   const res = await fetch('/index.json')
   const data = await res.json()
+  //@ts-ignore
   state.popOuts.push({
     type: 'folder',
     data: indexDataToMenuOptions(data.resources),
@@ -86,7 +90,8 @@ const onmenuSelected = (option: string, index: number) => {
   //First close all popouts after this menu(if any)
   state.popOuts.splice(index + 1)
 
-  const optionData: MenuOption = (state.popOuts[index] as FolderPopoutData).data
+  //@ts-ignore
+  const optionData: FileMenuOption | undefined = (state.popOuts[index] as FolderPopoutData).data
     .find(d => d.key == option)
 
   if (!optionData) return

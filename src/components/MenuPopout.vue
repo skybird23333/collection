@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NAvatar, NButton, NIcon, NLayoutSider, NMenu, NThing } from 'naive-ui';
 import BasePopout from './BasePopout.vue';
-import { defineProps, defineEmits, onUpdated, computed } from 'vue';
+import { onUpdated, computed } from 'vue';
 import { FolderOutline } from '@vicons/ionicons5';
 import calculateFolderSize from '../helpers/calculateFolderSize'
 import humaniseSize from '../helpers/humaniseSize';
