@@ -9,6 +9,7 @@ import type { VNode, Component } from 'vue'
 import MenuPopout from './components/MenuPopout.vue';
 import FilePopout from './components/FilePopout.vue';
 import type { VaultDocument } from './types/interfaces'
+import hljs from 'highlight.js/lib/core'
 
 interface FolderPopoutData {
   name: string
@@ -117,7 +118,7 @@ fetchIndexData()
 </script>
 
 <template>
-  <NConfigProvider :theme="darkTheme">
+  <NConfigProvider :theme="darkTheme" :hljs="hljs">
     <NSpace vertical style="gap: none;">
 
       <NLayoutHeader style="padding: 5px; height: 80px;" bordered>
@@ -144,11 +145,10 @@ fetchIndexData()
           <div v-for="[index, popout] in state.popOuts.entries()" :key="index">
             <MenuPopout v-if="popout.type == 'folder'" :options="popout.data" :index="index" :name="popout.name" @selected="onmenuSelected"
             :collapsed="(state.popOuts.length - index > 2)" :folderData="popout.folderData"/>
-            <FilePopout v-if="popout.type == 'document'" :data="popout.data" :index="index" />
           </div>
           
-          <NLayout>
-            
+          <NLayout v-if="state.popOuts.length > 0">
+            <FilePopout v-if="state.popOuts[state.popOuts.length - 1].type == 'document'" :data="state.popOuts[state.popOuts.length - 1].data"/>
           </NLayout>
           
         </NLayout>

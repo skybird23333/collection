@@ -5,6 +5,7 @@ import humaniseSize from '../helpers/humaniseSize'
 import { computed } from 'vue'
 
 import { DocumentOutline } from "@vicons/ionicons5"
+import FilePreviewer from './FilePreviewer.vue';
 
 const props = defineProps(['data'])
 
@@ -13,7 +14,7 @@ const size = computed(() => humaniseSize(props.data.size))
 </script>
 
 <template>
-    <BasePopout style="width: 100%;">
+    <BasePopout style="width: 100%">
         <NThing style=" padding: 20px;">
             <template #avatar>
                 <NAvatar>
@@ -28,9 +29,10 @@ const size = computed(() => humaniseSize(props.data.size))
             <template #description>
                 {{ size }}
             </template>
-            <template #action>
-                <NButton>Download</NButton>
+            <template #header-extra>
+                <NButton>Download(Does nothing currently)</NButton>
             </template>
+            <FilePreviewer :url="props.data.url"></FilePreviewer>
         </NThing>
 
     </BasePopout>

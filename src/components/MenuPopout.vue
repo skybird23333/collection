@@ -37,7 +37,7 @@ const size = computed(() => humaniseSize(calculateFolderSize(props.folderData)))
                 <template #header>
                     {{ name }}
                 </template>
-                <template #header-extra>
+                <template #description>
                     {{ size }}
                 </template>
                 <template #action>

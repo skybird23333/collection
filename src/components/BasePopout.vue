@@ -3,7 +3,7 @@ import { NScrollbar, NLayoutSider } from 'naive-ui';
 </script>
 
 <template>
-    <NScrollbar style="height: 92vh;">
+    <NScrollbar style="height: 92vh">
         <slot />
     </NScrollbar>
 </template>
