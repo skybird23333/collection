@@ -17,11 +17,11 @@ concurrency:
 
 jobs:
   build:
-  environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    environment:
+        name: github-pages
+        url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-
+  
     strategy:
       matrix:
         node-version: [16.x]
