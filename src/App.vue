@@ -120,7 +120,7 @@ fetchIndexData()
   <NConfigProvider :theme="darkTheme">
     <NSpace vertical style="gap: none;">
 
-      <NLayoutHeader style="padding: 5px; height: 8vh;" bordered>
+      <NLayoutHeader style="padding: 5px; height: 80px;" bordered>
         <NText style="font-size: x-large;">
           WACE-VAULT
         </NText>
