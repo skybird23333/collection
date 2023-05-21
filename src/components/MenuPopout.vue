@@ -11,19 +11,13 @@ const emit = defineEmits<{
 }>
     ()
 
-const { options, index, collapsed, name, folderData } = defineProps(['options', 'index', 'collapsed', 'name', 'folderData'])
+const props = defineProps(['options', 'index', 'collapsed', 'name', 'folderData'])
 
 const onItemSelected = (e: string) => {
-    emit('selected', e, index)
+    emit('selected', e, props.index)
 }
 
-console.log(folderData)
-
-let size = humaniseSize(calculateFolderSize(folderData))
-
-computed(() => {
-    size = humaniseSize(calculateFolderSize(folderData))
-})
+const size = computed(() => humaniseSize(calculateFolderSize(props.folderData)))
 //FIXME: Folder size doesn't get updated when opening a different folder
 
 

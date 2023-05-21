@@ -2,12 +2,13 @@
 import { NAvatar, NButton, NIcon, NThing } from 'naive-ui';
 import BasePopout from './BasePopout.vue';
 import humaniseSize from '../helpers/humaniseSize'
+import { computed } from 'vue'
 
 import { DocumentOutline } from "@vicons/ionicons5"
 
-const { data } = defineProps(['data'])
+const props = defineProps(['data'])
 
-const size = humaniseSize(data.size)
+const size = computed(() => humaniseSize(props.data.size))
 
 </script>
 
