@@ -2,7 +2,7 @@
 import { NAvatar, NButton, NIcon, NThing } from 'naive-ui';
 import BasePopout from './BasePopout.vue';
 import humaniseSize from '../helpers/humaniseSize'
-import { computed } from 'vue'
+import { computed, reactive } from 'vue'
 
 import { DocumentOutline } from "@vicons/ionicons5"
 import FilePreviewer from './FilePreviewer.vue';
@@ -11,6 +11,14 @@ const props = defineProps(['data'])
 
 const size = computed(() => humaniseSize(props.data.size))
 
+//Github will send the file back in a format that makes
+// it get downloaded instead of being rendered.
+const objectDownloadURL = reactive({ url: '' })
+
+const downloadFile = () => {
+    objectDownloadURL.url = props.data.url
+    objectDownloadURL.url = ''
+}
 </script>
 
 <template>
@@ -30,10 +38,17 @@ const size = computed(() => humaniseSize(props.data.size))
                 {{ size }}
             </template>
             <template #header-extra>
-                <NButton>Download(Does nothing currently)</NButton>
+                <NButton
+                    @click="downloadFile"
+                >Download</NButton>
             </template>
             <FilePreviewer :url="props.data.url"></FilePreviewer>
         </NThing>
+
+        <object
+            :data="objectDownloadURL.url"
+            style="display: none"
+        ></object>
 
     </BasePopout>
 </template>

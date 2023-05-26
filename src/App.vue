@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { reactive } from '@vue/reactivity';
-import { NConfigProvider, NMenu, NIcon, NSpace, NLayout, NLayoutSider, NScrollbar, NLayoutHeader, NH1, NText, NBreadcrumb, NBreadcrumbItem } from 'naive-ui'
+import { NConfigProvider, NMenu, NIcon, NSpace, NLayout, NLayoutSider, NScrollbar, NLayoutHeader, NH1, NText, NBreadcrumb, NBreadcrumbItem, NResult } from 'naive-ui'
 import type { MenuOption } from 'naive-ui'
 import { darkTheme } from 'naive-ui';
 import { DocumentOutline, FolderOutline } from "@vicons/ionicons5"
@@ -38,9 +38,11 @@ type FileMenuOption = {
 
 // We will keep a list of popouts here as well as the data they will contain
 let state = reactive<{
-  popOuts: PopoutData[]
+  popOuts: PopoutData[],
+  errored: boolean
 }>({
-  popOuts: []
+  popOuts: [],
+  errored: false
 })
 
 function renderIcon(icon: Component) {
@@ -75,15 +77,19 @@ const indexDataToMenuOptions = (data: any): FileMenuOption[] => {
 // Fetch the index data file, and then push the initial
 // popout containing the root folder
 const fetchIndexData = async () => {
-  const res = await fetch('/collection/index.json')
-  const data = await res.json()
-  //@ts-ignore
-  state.popOuts.push({
-    type: 'folder',
-    data: indexDataToMenuOptions(data.resources),
-    folderData: data.resources,
-    name: 'collection'
-  })
+  try {
+    const res = await fetch('/collection/index.json')
+    const data = await res.json()
+    //@ts-ignore
+    state.popOuts.push({
+      type: 'folder',
+      data: indexDataToMenuOptions(data.resources),
+      folderData: data.resources,
+      name: 'collection'
+    })
+  } catch {
+    state.errored = true
+  }
 }
 
 // A menu has its active item changed
@@ -129,7 +135,7 @@ fetchIndexData()
         <NBreadcrumb>
           <NBreadcrumbItem v-for="[index, popout] in state.popOuts.entries()" :key="index" :clickable="false">
             <NIcon>
-              <FolderOutline v-if="popout.type === 'folder'"/>
+              <FolderOutline v-if="popout.type === 'folder'" />
               <DocumentOutline v-if="popout.type === 'document'" />
             </NIcon>
             {{ popout.name }}
@@ -141,17 +147,29 @@ fetchIndexData()
       <NScrollbar :x-scrollable="true">
 
         <NLayout has-sider>
-          
+
           <div v-for="[index, popout] in state.popOuts.entries()" :key="index">
-            <MenuPopout v-if="popout.type == 'folder'" :options="popout.data" :index="index" :name="popout.name" @selected="onmenuSelected"
-            :collapsed="(state.popOuts.length - index > 2)" :folderData="popout.folderData"/>
+            <MenuPopout v-if="popout.type == 'folder'" :options="popout.data" :index="index" :name="popout.name"
+              @selected="onmenuSelected" :collapsed="(state.popOuts.length - index > 2)"
+              :folderData="popout.folderData" />
           </div>
-          
-          <NLayout v-if="state.popOuts.length > 0">
-            <FilePopout v-if="state.popOuts[state.popOuts.length - 1].type == 'document'" :data="state.popOuts[state.popOuts.length - 1].data"/>
+
+          <NLayout v-if="state.popOuts.length > 0" has-sider>
+            <FilePopout v-if="state.popOuts[state.popOuts.length - 1].type == 'document'"
+              :data="state.popOuts[state.popOuts.length - 1].data" />
           </NLayout>
           
+          <NLayout v-if="state.errored" style="height: 92vh; overflow: hidden;">
+            <NResult
+              status="500"
+              title="Failed to fetch the index file"
+              description="The vault app depends on an index file to work, which may have not been included in the build for some reason. Please open an issue."
+              style="padding: 20%; height: 100%; overflow: hidden;"
+            >
+            </NResult>
+          </NLayout>
         </NLayout>
+
 
       </NScrollbar>
     </NSpace>
