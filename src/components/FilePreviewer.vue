@@ -9,6 +9,7 @@ import Office from './FilePreviewers/Office.vue';
 import PDF from './FilePreviewers/PDF.vue';
 import Text from './FilePreviewers/Text.vue'
 import None from './FilePreviewers/None.vue'
+import Image from './FilePreviewers/Image.vue'
 
 const props = defineProps({
     url: {
@@ -34,6 +35,10 @@ const fileViewerStrategy = () => {
             return Markdown
         case 'exe':
             return None
+        case 'png':
+        case 'jpg':
+        case 'webp':
+            return Image
         default:
             return Text
     }
