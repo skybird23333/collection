@@ -5,6 +5,7 @@ on:
     branches: ["gh-pages", "main"]
   pull_request:
     branches: ["gh-pages"]
+  workflow_dispatch:
 
 permissions:
   contents: read
