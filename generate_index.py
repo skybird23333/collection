@@ -8,7 +8,7 @@ from pathlib import Path
 
 from dataclasses import dataclass
 
-GH_REPO_PATH = "wace-vault/collection"
+GH_REPO_PATH = "skybird23333/collection"
 INCLUDED_PATH = "resources"
 BASE_URL = "//"
 
