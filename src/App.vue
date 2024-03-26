@@ -137,7 +137,7 @@ fetchIndexData()
           </n-button>
         </a>
 
-        <n-popover trigger="hover" width="30%">
+        <n-popover trigger="hover" :width="30">
           <template #trigger>
             <n-button strong secondary type="warning" style="margin-left: 10px;"><b>
                 [?] This is an unofficial mirror
@@ -153,7 +153,7 @@ fetchIndexData()
           </span>
         </n-popover>
 
-        <n-popover trigger="hover" width="30%">
+        <n-popover trigger="hover" :width="30">
           <template #trigger>
             <n-button strong secondary style="margin-left: 10px;">
               [?] how can I bulk download files?
