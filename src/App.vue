@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { reactive } from '@vue/reactivity';
-import { NConfigProvider, NMenu, NIcon, NSpace, NLayout, NLayoutSider, NScrollbar, NLayoutHeader, NH1, NText, NBreadcrumb, NBreadcrumbItem, NResult } from 'naive-ui'
+import { NConfigProvider, NMenu, NIcon, NSpace, NLayout, NLayoutSider, NScrollbar, NLayoutHeader, NH1, NText, NBreadcrumb, NBreadcrumbItem, NResult, NPopover, NButton } from 'naive-ui'
 import type { MenuOption } from 'naive-ui'
 import { darkTheme } from 'naive-ui';
 import { DocumentOutline, FolderOutline } from "@vicons/ionicons5"
@@ -131,6 +131,43 @@ fetchIndexData()
         <NText style="font-size: x-large;">
           WACE-VAULT
         </NText>
+        <a href='https://github.com/skybird23333/collection' target="_blank">
+          <n-button strong secondary type="info" style="margin-left: 10px;">
+            Github
+          </n-button>
+        </a>
+
+        <n-popover trigger="hover" width="30%">
+          <template #trigger>
+            <n-button strong secondary type="warning" style="margin-left: 10px;"><b>
+                [?] This is an unofficial mirror
+              </b>
+            </n-button>
+          </template>
+          <span>
+            <b>WACE Vault has been shut down since Mar 26.</b> The resources of this site is hosted by another
+            individual
+            with no affiliations with the WACE Vault team, under their own risks and responsibilities. The front end of
+            this website is created by said individual. If you have issues navigating the site, open an issue on the
+            Github page. If you have any other queries, direct it to 2603003199a@gmail.com.
+          </span>
+        </n-popover>
+
+        <n-popover trigger="hover" width="30%">
+          <template #trigger>
+            <n-button strong secondary style="margin-left: 10px;">
+              [?] how can I bulk download files?
+            </n-button>
+          </template>
+          <span>
+            Depending on the number of files you require, either download them individually or download the entire
+            repository
+            using the Github page. Click on "Code" then "Download ZIP". The size of the repository is stated on the left
+            of the
+            page.
+          </span>
+        </n-popover>
+
 
         <NBreadcrumb>
           <NBreadcrumbItem v-for="[index, popout] in state.popOuts.entries()" :key="index" :clickable="false">
@@ -158,14 +195,11 @@ fetchIndexData()
             <FilePopout v-if="state.popOuts[state.popOuts.length - 1].type == 'document'"
               :data="state.popOuts[state.popOuts.length - 1].data" />
           </NLayout>
-          
+
           <NLayout v-if="state.errored" style="height: 92vh; overflow: hidden;">
-            <NResult
-              status="500"
-              title="Failed to fetch the index file"
+            <NResult status="500" title="Failed to fetch the index file"
               description="The vault app depends on an index file to work, which may have not been included in the build for some reason. Please open an issue."
-              style="padding: 20%; height: 100%; overflow: hidden;"
-            >
+              style="padding: 20%; height: 100%; overflow: hidden;">
             </NResult>
           </NLayout>
         </NLayout>
