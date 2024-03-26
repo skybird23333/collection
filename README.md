@@ -1,9 +1,6 @@
-# wace-vault
-Monorepo containing resources and associated Discord bot
+# This is an unofficial mirror
 
-## wace-vault/resources
-[README](https://github.com/wace-vault/collection/tree/main/resources#wace-vaultresources)
-
-## wace-vault/bot
-[README](https://github.com/wace-vault/collection/tree/main/bot#wace-vaultbot)
-
+<b>WACE Vault has been shut down since Mar 26.</b> The resources of this site is hosted by another
+            individual
+            with no affiliations with the WACE Vault team, under their own risks and responsibilities. The front end of
+            this website is created by said individual.
