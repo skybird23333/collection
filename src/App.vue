@@ -177,12 +177,12 @@ fetchIndexData()
             </a>
           </template>
           <span>
-            Check out my free to use gradings calculator! Features:
+            Click to check out my free to use gradings calculator! Features:
             <ul>
-              <li>Fancy coloured numbers to look at</li>
+              <li>Fancy coloured numbers and graphs to look at</li>
               <li>Tells you how much you need to reach your goal, even if you fall behind</li>
               <li>Tells you how your assessments have affected your overall marks</li>
-              <li>Open source(good code not guaranteed) and free to use</li>
+              <li>Open source(good code not guaranteed)</li>
             </ul>
             <i>
               Sorry for the ad. I need to eat.
