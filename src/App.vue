@@ -168,6 +168,28 @@ fetchIndexData()
           </span>
         </n-popover>
 
+        <n-popover trigger="hover" :width="350">
+          <template #trigger>
+            <a href='https://skybird23333.github.io/grading-calculator-react/' target="_blank">
+              <n-button strong style="margin-left: 10px;">
+                Want more insights on your grades?
+              </n-button>
+            </a>
+          </template>
+          <span>
+            Check out my free to use gradings calculator! Features:
+            <ul>
+              <li>Fancy coloured numbers to look at</li>
+              <li>Tells you how much you need to reach your goal, even if you fall behind</li>
+              <li>Tells you how your assessments have affected your overall marks</li>
+              <li>Open source(good code not guaranteed) and free to use</li>
+            </ul>
+            <i>
+              Sorry for the ad. I need to eat.
+            </i>
+          </span>
+        </n-popover>
+
 
         <NBreadcrumb>
           <NBreadcrumbItem v-for="[index, popout] in state.popOuts.entries()" :key="index" :clickable="false">
